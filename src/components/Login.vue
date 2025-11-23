@@ -16,6 +16,7 @@
 
     <p v-if="error" class="text-red-500 mt-2 text-center">{{ error }}</p>
   </div>
+  <p>Pas encore de compte ? Créez-le en saisissant un login et mot de passe maintenant !</p>
 </template>
 
 <script setup>
