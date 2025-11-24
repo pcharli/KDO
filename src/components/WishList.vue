@@ -8,8 +8,14 @@
 
      <!-- Modale ajout -->
     <AddWishModal v-if="showModal" @close="showModal = false" @add="addWish" />
+    <EditWishModal
+  v-model="showEdit"
+  :wish="selectedWish"
+  @save="updateWish"
+/>
 
-    <MyWishes :wishes="myWishes" @delete-wish="deleteWish" />
+
+    <MyWishes :wishes="myWishes" @delete-wish="deleteWish" @edit="startEdit" />
 
     <!-- Souhaits des autres -->
     <h2 class="text-xl font-bold mt-6 mb-2">Souhaits des autres</h2>
@@ -26,13 +32,14 @@ import { useUserStore } from '../stores/userStore'
 import MyWishes from './MyWishes.vue'
 import AllWishes from './AllWishes.vue'
 import AddWishModal from './AddWishModal.vue'
+import EditWishModal from './EditWishModal.vue'
 
 const showModal = ref(false)
 const wishesStore = useWishesStore()
 const userStore = useUserStore()
 
-onMounted(() => {
-  wishesStore.loadWishes()
+onMounted(async () => {
+  await wishesStore.loadWishes()
 })
 
 // Mes souhaits (array pour réactivité)
@@ -67,6 +74,19 @@ const reserveWish = async (id) => {
 const unreserveWish = async (id) => {
   await wishesStore.unreserveWish(id)
 }
+
+const showEdit = ref(false)
+const selectedWish = ref(null)
+
+function startEdit(wish) {
+  selectedWish.value = wish
+  showEdit.value = true
+}
+
+function updateWish(updatedWish) {
+  wishesStore.updateWish(updatedWish.id, updatedWish)
+}
+
 </script>
 
 <style>

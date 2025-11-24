@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { useWishesStore } from './wishesStore.js'
+
 
 const BASE = 'https://ingrwf12-default-rtdb.europe-west1.firebasedatabase.app/kdo/'
 
@@ -52,6 +54,11 @@ export const useUserStore = defineStore('user', {
 
       // Connexion
       this.currentUser = existingUser
+      // Charger les souhaits dès la connexion
+
+const wishStore = useWishesStore()
+await wishStore.loadWishes() 
+
     },
 
     logout() {

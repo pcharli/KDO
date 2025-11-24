@@ -65,6 +65,25 @@ export const useWishesStore = defineStore('wishesStore', {
       })
 
       await this.loadWishes()
+    },
+
+ async updateWish(id, updatedData) {
+  if (!this.wishes[id]) {
+    await this.loadWishes()
+    if (!this.wishes[id]) {
+      console.error("updateWish : id inexistant", id)
+      return
     }
+  }
+
+  await fetch(`${API_BASE}/wishes/${id}.json`, {
+    method: "PATCH",
+    body: JSON.stringify(updatedData)
+  })
+
+  this.wishes[id] = { ...this.wishes[id], ...updatedData }
+}
+
+
   }
 })

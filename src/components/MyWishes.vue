@@ -6,6 +6,16 @@
         <span class="text-gray-600 text-sm">{{ w.description }}</span>
         <div v-if="w.link" class="text-blue-500 text-sm"><a :href="w.link" target="_blank">Lien</a></div>
       </div>
+
+      <!-- update btn-->
+       <button
+  v-if="!w.reservedBy"
+  @click="$emit('edit', w)"
+  class="bg-blue-500 text-white px-2 py-1 rounded text-sm mr-2"
+>
+  Modifier
+</button>
+
       <!-- Si le souhait n'est pas réservé -->
 <button
   v-if="!w.reservedBy"
