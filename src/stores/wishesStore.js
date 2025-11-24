@@ -56,16 +56,24 @@ export const useWishesStore = defineStore('wishesStore', {
     },
 
     async unreserveWish(id) {
-      if (!this.wishes[id]) return
+  if (!this.wishes[id]) return
 
-      await fetch(`${API_BASE}/wishes/${id}.json`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reservedBy: null })
-      })
+  // On réinitialise reservedBy et price
+  const updated = {
+    reservedBy: null,
+    price: 0
+  }
 
-      await this.loadWishes()
-    },
+  // Patch Firebase
+  await fetch(`${API_BASE}/wishes/${id}.json`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updated)
+  })
+
+  // Mise à jour locale
+  this.wishes[id] = { ...this.wishes[id], ...updated }
+},
 
  async updateWish(id, updatedData) {
   if (!this.wishes[id]) {

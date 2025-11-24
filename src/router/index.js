@@ -3,6 +3,7 @@ import { useUserStore } from '../stores/userStore'
 
 import Login from '../components/Login.vue'
 import WishList from '../components/WishList.vue'
+import ReservedWishes from '../components/ReservedWishes.vue'
 
 const routes = [
   {
@@ -14,6 +15,12 @@ const routes = [
     path: '/',
     name: 'WishList',
     component: WishList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/reserved',
+    name: 'ReservedWishes',
+    component: ReservedWishes,
     meta: { requiresAuth: true }
   }
 ]

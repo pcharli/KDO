@@ -8,6 +8,11 @@
     Déconnexion
   </button>
 </div>
+
+<nav class="flex gap-4" v-if="userStore.currentUser">
+  <router-link to="/">Les souhaits</router-link>
+  <router-link to="/reserved">Mes réservations</router-link>
+</nav>
     </header>
 
     <main class="p-4 max-w-4xl mx-auto">
